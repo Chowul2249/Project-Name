@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<th:block th:fragment="project_type">
+<script th:src="@{/Tms/Masters/project_type.js}"></script>
+<head>
+</head>
+<body>
+<div id="fulldiv">
+<div id="halfdiv">
+
+<form th:action="@{saveprojecttype}" th:object="${saveprojecttype}" id="saveprojecttype" method="post" >  
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Project Type - Add
+        </td>
+   </tr>
+   
+   
+   
+  <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project(Type) Details</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="projecttype_details" id="projecttype_details"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error1">Enter Project Type</span></td>
+   </tr>
+
+
+
+        <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Status</td>
+            <td width="35%">
+            <select id="projecttype_status" name="projecttype_status"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y">Active</option>
+            <option value="N">Inactive</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Select Status</span></td>
+        </tr>
+
+
+                     <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:22%;" >Save</button>
+               
+               	          
+               	            <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="cancel_Project_Type();" th:value="Reset"></input>
+					</td>
+					</tr>
+</table>
+
+</form>
+
+</div>
+<table id="myTable" width="100%;" style="margin-top:50px; border-collapse:collapse;">
+			<thead>
+				<tr>
+					<td colspan="8" id="rpt_head">Project Type Details</td>
+				
+				</tr>
+				
+				<tr id="trtable">
+				<td width="2%" >S.No</td>				
+				<td width="20%">Project(Type) Name</td>		
+				<td width="13%">Status</td>				
+				<td width="15%">Edit</td>
+				<td width="12%">Delete</td>
+				
+				</tr>
+				</thead>
+				<tbody>			
+	
+	<th:block th:each="serialNO,li : ${projecttypelist}" >
+	<tr>
+	<td style="text-align: left;padding-left: 2%" th:text="${li.index+1 }"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO.projecttype_details}"></td>
+	<td style="text-align: left;padding-left: 2%">
+	<th:block th:if="${serialNO.projecttype_status=='Y'}">Active</th:block>
+	<th:block th:if="${serialNO.projecttype_status=='N'}">In-Active</th:block>
+	</td>
+	<td th:style="'text-align: left;padding-left: 2%'"><a th:onclick="'javascript:editProjecttype('+${serialNO.id}+')'">
+	<img th:style="'width:16px; height:16px;'" alt="" th:src="@{/common/images/edit.png}"></img></a></td>
+	<td th:style="'text-align: left;padding-left: 2%'"><a th:onclick="'javascript:deleteProjecttype('+${serialNO.id}+')'">
+	<img th:style="'width: 16px;height: 16px;'" alt="" th:src="@{/common/images/delete.png}"></img></a></td>
+	</tr>
+	</th:block>
+	
+	</tbody>
+	</table>	
+</div>
+	<script type="text/javascript">
+	
+	
+	 $('#myTable').dataTable({
+			"aLengthMenu" : [ [ 20, 30, 40, -1 ], [ 20, 30, 40, "All" ] ],
+			"iDisplayLength" : 20,
+			
+		});	
+	</script>
+</body>
+</th:block>
+</html>

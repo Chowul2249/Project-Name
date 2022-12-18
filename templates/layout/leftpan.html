@@ -1,0 +1,53 @@
+<html xmlns:th="http://thymeleaf.org">
+<th:block th:fragment="leftpan">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/common/project_menu/accordion_menu.js}"></script>
+<script type="text/javascript" th:src="@{/common/js/jquery-1.11.2.min.js}"></script>	
+			
+<script th:src="@{/common/js/script.js}"></script>
+
+<div id="left_menu" th:style="'border-right:#CCC 1px solid; background:#363636;position:relative; height:100%; float:left;overflow:auto;'">
+<div id='cssmenu'>
+	
+<ul>  
+<!-- class='active' -->
+    
+     <li class='has-sub' ><a href='#'><span style="margin-right:10px;"></span><span>Project</span></a>
+      <ul>
+         <!-- <li style="padding-left: 10%"><a href="javascript:MyFunction('Project');"><span style="margin-right:10px;"></span><span>Add-Project</span></a></li>
+         <li style="padding-left: 10%"><a href="javascript:MyFunction('module');"><span style="margin-right:10px;"></span><span>Module</span></a></li>
+         <li style="padding-left: 10%"><a href="javascript:MyFunction('activity');"><span style="margin-right:10px;"></span><span>Activity</span></a></li>
+         <li style="padding-left: 10%"><a href="javascript:MyFunction('project_type');"><span style="margin-right:10px;"></span><span>Project Type</span></a></li>
+         <li style="padding-left: 10%"><a href="javascript:MyFunction('Project_Details');"><span style="margin-right:10px;"></span><span>Project Module Details</span></a></li>
+		 <li style="padding-left: 10%"><a href="javascript:MyFunction('project_activity');"><span style="margin-right:10px;"></span><span>Project Activity Details</span></a></li> -->
+		 <li style="padding-left: 10%"><a href="javascript:MyFunction('project_assign');"><span style="margin-right:10px;"></span><span>Project Assign</span></a></li>
+		  <li style="padding-left: 10%"><a href="javascript:MyFunction('project_task_assign');"><span style="margin-right:10px;"></span><span>Project Task Assign</span></a></li>
+		 <li style="padding-left: 10%"><a href="javascript:MyFunction('project_assign_to_Emp');"><span style="margin-right:10px;"></span><span>Project Assign to Employee </span></a></li>         
+      	<li style="padding-left: 10%"><a href="javascript:MyFunction('otheractivityassign');"><span style="margin-right:10px;"></span><span>Other Activity Assign</span></a></li>
+      </ul>
+     </li>
+     
+     
+     <li class='has-sub' ><a href='#'><span style="margin-right:10px;"></span><span>Profile</span></a>
+      <ul>
+		 <li style="padding-left: 10%"><a href="javascript:MyFunction('profile');"><span style="margin-right:10px;"></span><span>Employee Profile</span></a></li>      
+<!-- 		<li style="padding-left: 10%"><a href="javascript:MyFunction('searchEmployee');"><span style="margin-right:10px;"></span><span>Employee Profile Detail</span></a></li> -->
+		<li style="padding-left: 10%"><a href="javascript:MyFunction('reportEmployee');"><span style="margin-right:10px;"></span><span>Employee Report</span></a></li>		             
+      </ul>
+     </li>
+     
+     <li class='has-sub' ><a href='#'><span style="margin-right:10px;"></span><span>Task Entry</span></a>
+      <ul>
+		 <li style="padding-left: 10%"><a href="javascript:MyFunction('taskentry');"><span style="margin-right:10px;"></span><span>TaskEntry</span></a></li>   		             
+      </ul>
+     </li> 
+</ul>
+   
+</div>    
+</div>
+    
+      <div id="tmsmainpage" th:style="'border:#F00 0px solid; position:relative; float:left; margin-left:5px; overflow:auto;background-color: white; height:100%;'">
+      </div>
+   
+</th:block>
+</html> 

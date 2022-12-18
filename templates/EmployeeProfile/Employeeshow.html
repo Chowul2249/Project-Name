@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<script th:src="@{/Tms/EmployeeProfile/EmployeeProfile.js}"></script>
+<script type="text/javascript" th:src="@{/common/project_menu/accordion_menu.js}"></script>
+</head>
+<body>
+<div id="fulldiv">
+<table width="96%" style="border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;" align="center" id="employeeListTable">
+  <tr id="frm_head">
+        <td colspan="18" style=" color:#443a3a; font-weight:bold; padding-left:10px;">
+       		Employee Info       		
+        </td>
+    </tr>
+ 
+	<th:block th:each="li,serialNO : ${list1}" >
+	<tr>
+	
+	 <td th:text="'Employee Code &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+ ${li.empb_id}"></td>
+	 </tr>
+	 <tr>
+	 <td th:text="'Employee Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+${li.empb_fname} +' '+ ${li.empb_lname}"></td>
+	</tr>
+	<tr>
+	<td th:text="'Date Of Birth &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+${#dates.format(li.dob, 'dd/MM/yyyy')}"></td>
+	</tr>
+	<td>Gender  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
+<span th:if="${li.empb_gend} == 'M' " th:text="Male"/>
+<span th:if="${li.empb_gend}=='F'" th:text="Female"/>
+</td>
+	<tr>
+	<td th:text="'Mobile Number   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+${li.empb_mobile}"></td>
+	</tr>
+	<tr>
+	<td th:text="'LandLine Number &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+${li.empb_landline}"></td>
+	</tr>
+	<tr>
+	<td th:text="'Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+${li.empb_email}"></td>
+	</tr>
+	<tr>
+	 	 <td th:each="list : ${empCatList}" th:if="${list.id==li.empCatToEmp}" th:text="'Category  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+ ${list.empCatName}"></td>
+
+	</tr>
+	<tr>
+	 	 <td th:each="list : ${departmentList}" th:if="${list.id==li.deptToempBasic}" th:text="'Department &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+ ${list.depart_name}"></td>
+
+	</tr>
+	<tr>
+	<td th:each="list : ${divisionList}" th:if="${list.id==li.divToempBasic}" 
+	th:text="'Division  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+ ${list.division_name}"></td>
+	</tr>
+	<tr>
+	 	 <td th:each="list : ${DesignationList}" th:if="${list.id==li.desigToEmp}" th:text="'Designation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+ ${list.desig_name}"></td>
+
+	</tr>
+	<tr>
+	<td th:each="list : ${JobLevelList}" th:if="${list.id==li.levelToemp}" 
+	 	 th:text="'Level &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;' +${list.levelName}"></td>
+	</tr>
+	<tr>
+	<td th:text="'Date Of Joinig &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;'+${#dates.format(li.dateOfJoin, 'dd/MM/yyyy')}"></td>
+	</tr>
+	<tr>
+	<td>
+	<span th:if="${li.status=='Y'}"
+	 th:text="'Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; Active'">
+	</span>
+	<span th:if="${li.status=='N'}"
+	 th:text="'Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; Inactive'">
+	</span>
+	</td>
+	</tr> 
+	</th:block>
+	</table>
+</div>	
+
+<button  class="frmbutton" style="margin-left:15%;" onclick="javascript:MyFunction('profile');">Back</button>
+</body>
+</html>

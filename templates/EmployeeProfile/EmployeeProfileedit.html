@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<script th:src="@{/Tms/EmployeeProfile/EmployeeProfile.js}"></script>
+
+</head>
+<body>
+<div id="fulldiv">
+    <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Employee Profile-SHOW
+        </td>
+   </tr>
+   
+   <tr>
+ 						 
+						<td><input type="hidden" name="name" id="id"  th:value="${list.empb_id}" /></td>
+						
+				</tr>
+      
+  <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">First Name</td>
+            <td width="30%">
+<!--            			<input type="text" style="width: 35%;" maxlength="60" name="empb_fname" id="empb_fname" th:value="${list.empb_fname}"></input> -->
+           			<p th:text="${list.empb_fname}"></p>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error1">Enter First Name</span></td>
+   </tr>   
+  <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Last Name</td>
+            <td width="35%">
+<!--            			<input type="text" style="width: 35%;" maxlength="60" name="empb_lname" id="empb_lname" th:value="${list.empb_lname}"></input> -->
+							<p th:text="${list.empb_lname}"></p>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error2">Enter Last Name</span></td>
+   </tr>
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Date Of Birth</td>
+            <td width="30%">
+	<p th:text="${#dates.format(list.dob, 'dd/MM/yyyy')}"></p>           			
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error3">Choose Data Of Birth</span></td>
+   </tr> 
+   	 <tr id="frm_tbleven">
+		 <td width="22%" class="frmtbl_td">Gender</td>
+		  <td width="35%">
+		  <th:block th:if="${list.empb_gend.equals('M')}">
+		  <p th:text="Male"></p>
+		  </th:block>
+		   <th:block th:if="${list.empb_gend.equals('F')}">
+		   <p th:text="Female"></p>
+		   </th:block>
+		    <th:block th:if="${list.empb_gend.equals('T')}">
+		    <p th:text="Transgender"></p>
+		    </th:block>
+		
+		  </td>
+		  <td width="36%"><span style="color:#ff0000;display: none;"  id="Error4" >Select Location</span></td>
+		 </tr>
+		 
+	<tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Mobile Number</td>
+            <td width="30%">
+           			<!-- <input type="text" style="width: 35%;" maxlength="60" name="empb_mobile" id="empb_mobile" th:maxlength="10" th:value="${list.empb_mobile}"></input> -->
+         			<p th:text="${list.empb_mobile}"></p>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error5">Invalid Mobile Number</span></td>
+   </tr> 
+     <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">LandLine</td>
+            <td width="35%">
+            <!-- <input type="text" style="width: 8%;" maxlength="60" name="empb_landlinecode" id="empb_landlinecode" th:maxlength="4" th:value="${landlinecode}"></input> --> 
+          <p th:text="${landlinecode+'-'+landlineno}"></p>
+            <!-- <input type="text" style="width: 25%;" maxlength="60" name="empb_landline" id="empb_landline" th:maxlength="6"  th:value="${landlineno}"></input> -->
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error6">Invalid Land-Line Name</span></td>
+   </tr>
+   <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Email</td>
+            <td width="30%">
+           			<!-- <input type="text" style="width: 35%;" maxlength="60" name="empb_email" id="empb_email" th:value="${list.empb_email}"></input> -->
+          				<p th:text="${list.empb_email}"></p>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error7">Enter Email</span></td>
+   </tr>
+    <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Category</td>
+            <td width="35%">
+            
+            
+            <th:block th:each="empList : ${empList}" >
+            <th:if test= "${empList.status=='Y' }"> 
+            <p th:if="${list.empCatToEmp==empList.id}" th:text="${empList.empCatName}"></p>                 
+            </th:if>  
+            </th:block>
+            
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error8">Select Category</span></td>
+        </tr>
+        <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Print-Category</td>
+            <td width="35%">
+         
+            <th:block>
+            <th:if test= "${pcList.status=='Y' }"> 
+            <p  th:each="pcList : ${pcList}" th:if="${list.printCatId==pcList.id}"
+            th:text="${pcList.printCat_name}"></p>           
+            </th:if>
+            </th:block>
+         
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error9">Select Print-Category</span></td>
+        </tr>
+         <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Department</td>
+            <td width="35%">
+              
+            <th:block>
+            <th:if test= "${depList.status=='Y' }"> 
+            <p  th:each="depList : ${depList}" 
+            th:if="${list.deptToempBasic==depList.id}" th:text="${depList.depart_name}" ></p>           
+            </th:if>
+            </th:block>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error10">Select Department</span></td>
+        </tr>
+          <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Division</td>
+            <td width="35%">
+           
+            
+            <th:block>
+            <th:if test= "${divList.status=='Y' }"> 
+            <p  th:each="divList : ${divList}"  th:if="${list.divToempBasic==divList.id}" 
+             th:text="${divList.division_name}"></p>           
+            </th:if>
+            </th:block>
+            
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error11">Select Division</span></td>
+        </tr>
+        <tr id="frm_tbleven">
+            <td width="22%">Designation</td>
+            <td width="35%">
+           
+            <th:block>
+            <th:if test= "${desiList.status=='Y' }"> 
+            <p  th:each="desiList : ${desiList}" th:if="${list.desigToEmp==desiList.id}"
+            th:text="${desiList.desig_name}" ></p>           
+            </th:if>
+            </th:block>
+            
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error12">Select Designation</span></td>
+        </tr>
+        <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Job-Level</td>
+            <td width="35%">
+            
+            <th:block>
+            <th:if test= "${levelList.status=='Y' }"> 
+            <p th:each="levelList : ${levelList}" th:if="${list.levelToemp==levelList.id}"
+             th:text="${levelList.levelName}" ></p>           
+            </th:if>
+            </th:block>
+            
+            </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error13">Select Job-level</span></td>
+        </tr>
+         <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Date of Joining</td>
+            <td width="35%">
+<!--            			<input type="text" style="width: 35%;" maxlength="60" name="dateOfJoin" id="dateOfJoin" readonly="readonly" th:value="${#dates.format(list.dateOfJoin, 'dd/MM/yyyy')}"></input> -->
+							<p th:text="${#dates.format(list.dateOfJoin, 'dd/MM/yyyy')}"></p>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error14">Choose Date Of Joining</span></td>
+   </tr>
+   <th:block th:if="${report!=0}">
+   <tr>
+		<td class="frmtbl_td">Report TO</td>
+          <td>
+          
+            
+           
+           
+            <th:block  th:each="empListByLevel : ${empListByLevel}" >
+            <p th:if="${report==empListByLevel.empb_id}" th:text="${empListByLevel.empb_fname}" ></p>           
+            </th:block>
+           
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error15">Choose Report</span></td> 
+</tr>
+</th:block>
+       <!-- <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Employee Photo</td>
+            <td width="35%">
+           			<input type="file" style="width: 35%;" maxlength="60" name="empb_photo" id="empb_photo"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error16" th:value="${list.empb_photo}">Choose File</span></td>
+   </tr>  -->
+   <tr id="frm_tbleven">
+			<td>Status</td>
+          <td>					
+							<th:block th:if="${list.status.equals('Y')}">
+						<p>Active</p>
+						</th:block>
+						<th:block th:if="${list.status.equals('N')}">
+						<p>Inactive</p>
+						</th:block>
+		
+		</td>
+		<td width="48%"><span style="color:#ff0000; display: none " id="Error17">Choose Status</span></td>
+		</tr>
+		<!-- <tr id="frmtbl_td">
+        <td><label>Status Reason</label></td>
+        <td>
+	    <th:block th:if="${list.inactive_reason.equals('R')}">
+	    	   <p th:text="Resigned"></p>
+	    	   </th:block>     
+	    	   <th:block th:if="${list.inactive_reason.equals('A')}">
+	    	   <p th:text="Absconded"></p>
+	    	   </th:block>     
+	    	   <th:block th:if="${list.inactive_reason.equals('LL')}">
+	    	   <p th:text="Long Leave"></p>
+	    	   </th:block>     
+	    	   <th:block th:if="${list.inactive_reason.equals('T')}">
+	    	   <p th:text="Terminated"></p>
+	    	   </th:block>     
+	    	   <th:block th:if="${list.inactive_reason.equals('NP')}">
+	    	   <p th:text="Notice Period"></p>
+	    	   </th:block>     
+	  
+	   </td>
+	   <td width="48%"><span style="color:#ff0000; display: none " id="Error18">Choose Reason</span></td>
+    </tr> -->
+     <tr>
+                    <td colspan="3" >
+                   
+<!-- 		                  <button  class="frmbutton" style="margin-left:22%;" onclick="return Updateprofile();">Update</button> -->
+		                                
+<!-- 		                  <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="cancelEmpProfile();" th:value="Reset"></input> -->
+					</td>
+					</tr>
+</table>
+</div>
+</body>
+</html>
+ 

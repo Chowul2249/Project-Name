@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<th:block th:fragment="addproject">
+<script th:src="@{/Tms/EmployeeProfile/addproject.js}"></script>
+<head>
+</head>
+<body>
+<div id="fulldiv">
+<div id="halfdiv">
+
+<form th:action="@{projectdetails}" th:object="${projectdetails}" id="projectdetails" method="post">  
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Project Details - Add
+        </td>
+   </tr>
+   
+   
+   
+  <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project Name</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="name" id="name"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error1">Enter Project</span></td>
+   </tr>
+   
+  <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Client Name</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="client" id="client"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error2">Enter client</span></td>
+   </tr>
+
+
+
+        <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project Endpoint</td>
+            <td width="35%">
+            <select id="endpoint" name="endpoint"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error3">Select Endpoint</span></td>
+        </tr>
+
+
+  <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Project StartDate</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="startdate" id="startdate" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error4">Enter Project StartDate</span></td>
+   </tr>
+
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project EndDate</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="enddate" id="enddate" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error5">Enter Project EndDate</span></td>
+   </tr>
+
+
+        <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Project Extends</td>
+            <td width="35%">
+            <select id="extend" name="extend"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error6">Select Extends</span></td>
+        </tr>
+
+
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Client Number</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="contactnumber" id="contactnumber" th:maxlength="10"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error7">Invalid contact number</span></td>
+   </tr>
+   
+ <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Enter Client Country</td>
+            <td width="35%">
+            <select name="country" id="country" style="width:35%" th:onchange ="'javascript:upstate();'">
+            <option value="0">--Select Country--</option>
+            <th:block  th:each="countryList : ${countryList}">
+            <th:if test= "${countryList.status=='Y' }"> 
+            <option th:value="${countryList.id}" th:text="${countryList.countryName}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error8">Select Country</span></td>
+        </tr>
+   
+
+   
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Enter Client State</td>
+            <td width="35%">
+            		<div id="state3">
+					<div id="state2">
+            <select name="state" id="state" style="width:35%" th:onchange ="'javascript:upcity();'">
+            <option value="0">--Select State--</option>
+            <th:block  th:each="stateList : ${stateList}">
+            <th:if test= "${stateList.status=='Y' }"> 
+            <option th:value="${stateList.id}" th:text="${stateList.stateName}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error9">Select Country</span></td>
+        </tr>
+   
+    <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Enter Client City</td>
+            <td width="35%">
+            	<div id="state1">
+				<div id="state4">
+            <select name="city" id="city" style="width:35%">
+            <option value="0">--Select City--</option>
+            <th:block  th:each="cityList : ${cityList}">
+            <th:if test= "${cityList.status=='Y' }"> 
+            <option th:value="${cityList.id}" th:text="${cityList.cityName}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error10">Select Country</span></td>
+        </tr>
+
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Client Address</td>
+            <td width="30%">
+           			<textarea style="width: 35%;" name="address" id="address"></textarea>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error11">Enter Address</span></td>
+   </tr>
+   
+     <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Status</td>
+            <td width="35%">
+            <select id="status" name="status"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y">Active</option>
+            <option value="N">Inactive</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error12">Select Status</span></td>
+        </tr>
+
+        
+                     <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:22%;" >Save</button>
+               
+               	          
+               	          <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="canceladdproject();" th:value="Reset"></input>
+					</td>
+					</tr>
+</table>
+
+</form>
+
+</div>
+
+
+<table id="myTable" width="100%;" style="margin-top:50px; border-collapse:collapse;">
+			<thead>
+				<tr>
+					<td colspan="9" id="rpt_head">Project Details</td>
+				
+				</tr>
+				
+				<tr id="trtable">
+				<td width="5%" >S.No</td>				
+				<td width="15%">Project Name</td>
+				<td width="15%">Client Name</td>		
+				<td width="15%">StartDate</td>				
+				<td width="15%">EndDate</td>
+				<td width="10%">Extends</td>
+				<td width="10%">Status</td>
+				<td width="5%">Edit</td>
+				<td width="12%">Delete</td>
+				
+				</tr>
+				</thead>
+				<tbody>			
+	
+	<th:block th:each="li,serialNO : ${list}" >
+	<tr>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO.index+1 }"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${li.name}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${li.client}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.startdate, 'dd/MM/yyyy')}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.enddate, 'dd/MM/yyyy')}"></td>
+	<td style="text-align: left;padding-left: 2%">
+	<th:block th:if="${li.extend=='Y'}">Yes</th:block>
+	<th:block th:if="${li.extend=='N'}">No</th:block>
+	</td>
+	<td style="text-align: left;padding-left: 2%">
+	<th:block th:if="${li.status=='Y'}">Active</th:block>
+	<th:block th:if="${li.status=='N'}">In-Active</th:block>
+	</td>
+	<td th:style="'text-align: left;padding-left: 2%'"><a th:onclick="'javascript:editProject('+${li.id}+')'">
+	<img th:style="'width:16px; height:16px;'" alt="" th:src="@{/common/images/edit.png}"></img></a></td>
+	<td th:style="'text-align: left;padding-left: 2%'"><a th:onclick="'javascript:deleteProject('+${li.id}+')'">
+	<img th:style="'width: 16px;height: 16px;'" alt="" th:src="@{/common/images/delete.png}"></img></a></td>
+	</tr>
+	</th:block>
+	
+			</tbody>
+			
+			</table>
+
+</div>
+<script type="text/javascript">
+	
+	
+	 $('#myTable').dataTable({
+			"aLengthMenu" : [ [ 20, 30, 40, -1 ], [ 20, 30, 40, "All" ] ],
+			"iDisplayLength" : 20,
+			
+		});	
+	</script>
+</body>
+</th:block>
+</html>

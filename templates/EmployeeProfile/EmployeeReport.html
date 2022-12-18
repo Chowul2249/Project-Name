@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<script th:src="@{/Tms/EmployeeProfile/EmployeeReport.js}"></script>
+</head>
+<body>
+	<div  id="employeeList">   
+   <div id="fulldivision">		
+			<table id="myTable" width="100%;" style="margin-top:50px; border-collapse:collapse;">
+			<thead>
+				<tr>
+					<td colspan="8" id="rpt_head">Employee-Report(Info)</td>
+				
+				</tr>
+				
+				<tr id="trtable">
+				<td width="5%" >S.No</td>		
+				<td width="15%" >Employee Code</td>				
+				<td width="20%">Reported Name</td>	
+				<td width="20%">Mobile</td>
+				<td width="20%">Email</td>
+				<td width="20%">Designation</td>
+				<td width="20%">Status</td>				
+								
+				</tr>
+				</thead>
+				<tbody>			
+				
+	<th:block th:if="${reportlistsize >0}">
+	<th:block th:each="serialNO,li : ${reportlist}" >
+	<tr>
+	<td style="text-align: left;padding-left: 2%" th:text="${li.index+1 }"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO[0]}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO[1]}+' '+${serialNO[2]}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO[3]}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO[4]}"></td>
+	<td style="text-align: left;padding-left: 2%" th:each="list : ${desiList}" th:if="${list.id==serialNO[5]}" th:text="${list.desig_name}"></td>
+	<td style="text-align: left;padding-left: 2%">
+	<span th:if="${serialNO[6]}=='Y'" th:text="'Active'"></span>
+	<span th:if="${serialNO[6]}=='N'" th:text="'Inactive'"></span>
+	</td> 
+	</tr>
+	</th:block>
+	</th:block>
+				
+	</tbody>
+	</table>	
+	</div>
+   
+   
+   </div>
+  <!--  <script type="text/javascript">
+	
+	
+	 $('#myTable').dataTable({
+			"aLengthMenu" : [ [ 20, 30, 40, -1 ], [ 20, 30, 40, "All" ] ],
+			"iDisplayLength" : 20,
+			
+		});	
+	</script> -->
+</body>
+</html>

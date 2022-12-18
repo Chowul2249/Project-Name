@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<script th:src="@{/Tms/Masters/project_activity.js}"></script>
+</head>
+<body>
+<div id="fulldiv">
+ <!-- <form th:action="@{update_projectactivity}" th:object="${update_projectactivity}" method="post" id="updateprojectactivity"> -->       
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Project Activity - Update
+        </td>
+   </tr>
+   <tr><td>
+<input type="hidden" name="projectact_id" id="projectact_id" th:value="${project_activityedit.projectact_id}" class="form-control"></input>
+</td></tr>
+   
+<tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project Name</td>
+            <td width="35%">
+            <select name="projectdet_id" id="projectdet_id" style="width:35%; background-color: #DDD; color: #999;" th:onchange ="'javascript:onloadmodule();'" th:disabled="disabled">
+            <option value="0">--Select Project--</option>
+            <th:block  th:each="projectdetailslist : ${projectdetailslist}">
+       
+            <option th:each="projectlist : ${projectlist}" 
+            th:value="${projectdetailslist.id}" th:if="${project_activityedit.projectdet_id==projectdetailslist.id}"
+            th:selected="${projectdetailslist.project_id==projectlist.id}" 
+            th:text="${projectlist.name}"></option>           
+            
+            </th:block>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none;" id="Error1">Note: Could not edit</span></td>
+        </tr>
+
+<tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Module Name</td>
+            <td width="35%">
+             <div id="module1">
+            <div id="module2">
+            <select name="module_id" id="module_id" style="width:35%; background-color: #DDD; color: #999;" th:disabled="disabled" >
+            <option value="0">--Select Module--</option>
+            <th:block  th:each="projectdetailslist : ${projectdetailshow}">
+            <option th:each="moduleshow : ${moduleshow}" 
+            th:value="${moduleshow.id}" th:if="${projectdetailslist.module_id==moduleshow.id}"
+            th:selected="${project_activityedit.projectdet_id==projectdetailslist.id}" th:text="${moduleshow.module_detail}"></option>           
+            </th:block>
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Select module</span></td>
+        </tr>
+
+        <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Activity Name</td>
+            <td width="35%">
+            <select name="activity_id" id="activity_id" style="width:35%">
+            <option value="0">--Select Activity--</option>
+            <th:block  th:each="activitdetaillist : ${activityshow}">
+            <th:if test= "${activitdetaillist.activity_status=='Y' }"> 
+            <option th:value="${activitdetaillist.id}" th:selected="${project_activityedit.activity_id==activitdetaillist.id}" th:text="${activitdetaillist.activity_dts}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error3">Select Activity</span></td>
+        </tr>
+
+
+                     <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:22%;" onclick="return updateproject();" >Update</button>
+
+                 <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="return cancelProjectA();" th:value="Reset"></input>
+               	        
+					</td>
+
+   					
+					</tr>
+</table>
+
+<!-- </form> -->
+					
+	</div>	
+</body>
+</html>

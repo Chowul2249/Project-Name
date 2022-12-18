@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<th:block th:fragment="project_activity">
+<head>
+<script th:src="@{/Tms/Masters/project_activity.js}"></script>
+</head>
+<body>
+<div id="fulldiv">
+<div id="halfdiv">
+ <form th:action="@{saveprojectactivity}" th:object="${saveprojectactivity}" method="post" id="saveprojectactivity">       
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Project Activity - Add
+        </td>
+   </tr>
+<tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project Name</td>
+            <td width="35%">
+            <select  name="project_id" id="project_id" style="width:35%" th:onchange ="'javascript:onmodule();'">
+            <option value="0">--Select Project--</option>
+            
+            
+            <option th:each="projectlist : ${projectlist}" th:value="${projectlist.id}" th:text="${projectlist.name}"></option>           
+            
+            
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error1">Select Project</span></td>
+        </tr>
+		
+		<tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Module Name</td>
+            <td width="35%">
+            <div id="module1">
+            <div id="module2">
+            <select name="projectdet_id" id="projectdet_id" style="width:35%">
+            <option value="0">--Select Module--</option>
+            <th:block  th:each="projectdetailshow : ${projectdetailshow}">
+            <th:if test= "${projectdetailshow.projectdet_status=='Y' }">
+            <th:block  th:each="show:${moduleshow}" >
+            <th:block  th:each="modulenamedistinct : ${modulenamedistinct}" th:if="${show.id==modulenamedistinct[0]}">
+            <option th:if="${show.id==projectdetailshow.module_id}" th:value="${projectdetailshow.id}" th:text="${show.module_detail}"></option>
+            </th:block>  
+            </th:block>          
+            </th:if>
+            </th:block>
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Select Module</span></td>
+        </tr>
+		
+        <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Activity Name</td>
+            <td width="35%">
+            <select name="activity_id" id="activity_id" style="width:35%">
+            <option value="0">--Select Activity--</option>
+            <th:block  th:each="activitdetaillist : ${activitdetaillist}">
+            <th:if test= "${activitdetaillist.activity_status=='Y' }"> 
+            <option th:value="${activitdetaillist.id}" th:text="${activitdetaillist.activity_dts}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error3">Select Activity</span></td>
+        </tr>
+
+
+                     <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:22%;" >Save</button>
+               
+               	         
+               	           <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="return cancelProjectA();" th:value="Reset"></input>
+					</td>
+					</tr>
+</table>
+
+</form>
+					
+	</div>		
+	
+	<table id="myTable" width="100%;" style="margin-top:50px; border-collapse:collapse;">
+			<thead>
+				<tr>
+					<td colspan="8" id="rpt_head">Project Activity Details</td>
+				
+				</tr>
+				
+				<tr id="trtable">
+				<td width="2%" >S.No</td>				
+				<td width="20%">Project Name</td>		
+				<td width="20%">Module Name</td>		
+				<td width="13%">Activity Name</td>				
+				<td width="15%">Edit</td>
+				<!-- <td width="12%">Delete</td> -->
+				
+				</tr>
+				</thead>
+				<tbody>			
+	
+	<th:block th:each="li,serialNO : ${projectactivityshow}" >
+	
+	<tr>
+	
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO.index+1 }"></td>
+	<td style="text-align: left;padding-left: 2%" >
+	<th:block th:each="projectdetailshow : ${projectdetailshow}" th:if="${li.projectdet_id==projectdetailshow.id}">
+	<th:block th:each="projectshow : ${projectshow}" th:if="${projectdetailshow.project_id==projectshow.id}"
+	th:text="${projectshow.name}">
+	 	</th:block>	
+	 	</th:block>
+	</td>
+	 
+
+
+
+	
+	
+	<td style="text-align: left;padding-left: 2%">
+	<th:block th:each="projectdetailshow : ${projectdetailshow}" th:if="${li.projectdet_id==projectdetailshow.id}">
+	<th:block th:each="moduledisplay : ${moduledisplay}" th:if="${moduledisplay.id==projectdetailshow.module_id}" th:text="${moduledisplay.module_detail}"></th:block>
+	</th:block>
+	</td>
+	
+	
+	<td style="text-align: left;padding-left: 2%" >
+	
+	<th:block th:each="list : ${activityshow}" th:if="${list.id==li.activity_id}" th:text="${list.activity_dts}"></th:block>
+
+	</td>
+	
+	
+	
+	<td th:style="'text-align: left;padding-left: 2%'"><a th:onclick="'javascript:editprojectactivity('+${li.projectact_id}+')'">
+	<img th:style="'width:16px; height:16px;'" alt="" th:src="@{/common/images/edit.png}"></img></a></td>
+	<!-- <td th:style="'text-align: left;padding-left: 2%'"><a th:onclick="'javascript:deleteprojectactivity('+${serialNO.projectact_id}+')'">
+	<img th:style="'width: 16px;height: 16px;'" alt="" th:src="@{/common/images/delete.png}"></img></a></td> -->
+	</tr>
+	</th:block>
+	
+	</tbody>
+	</table>	
+</div>
+	<script type="text/javascript">
+	
+	
+	 $('#myTable').dataTable({
+			"aLengthMenu" : [ [ 20, 30, 40, -1 ], [ 20, 30, 40, "All" ] ],
+			"iDisplayLength" : 20,
+			
+		});	
+	</script>
+</body>
+</th:block>
+</html>

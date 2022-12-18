@@ -1,0 +1,67 @@
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta Http-Equiv="Cache-Control" Content="no-cache,no-store"/>
+<meta Http-Equiv="Pragma" Content="no-cache"/>
+<meta Http-Equiv="Expires" Content="0"/> 
+<title>Task Management System</title>
+<th:block th:replace="/layout/header_css :: header_css">
+</th:block>
+
+</head>
+
+<body>
+<!-- <% session.getAttribute("userId"); %> -->
+
+	<div th:replace="/layout/container :: container"></div>
+	<div th:replace="/layout/footer_js :: footer_js"></div>
+	
+</body>
+
+
+<script type="text/javascript">
+
+	
+var timoutNow=960000;
+var timeoutTimer;
+
+    $( document ).ready(function() {	  	
+	// Start timers.
+	StartTimers();
+	
+	$(this).mousemove(function (e) {		
+		ResetTimers();
+		});
+	
+		/* this function check the keyboard event
+		if any key press by key board then it set idleTissme the value 0 */
+		$(this).keypress(function (e) {
+			ResetTimers();
+		});
+		}); 
+  
+  
+	function StartTimers() {
+           timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+	}		
+	
+	// Reset timers.
+	function ResetTimers() {
+	 clearInterval(timeoutTimer);
+	   StartTimers();	  
+	}
+
+	// Logout the user.
+	function IdleTimeout() {
+		window.location.href = "doLogOut.html?flag=1";
+	}
+
+	
+	
+</script>
+
+
+
+</html>
+
+
+

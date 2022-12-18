@@ -1,0 +1,248 @@
+<html xmlns:th="http://thymeleaf.org">
+<th:block th:fragment="header">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>HRMS - Tablets(India)</title>
+<script type="text/javascript" th:src="@{/common/project_menu/accordion_menu.js}"></script>
+<style type="text/css">
+/* For using DatePicker Style */
+ .ui-datepicker-title {
+    background-color: #D3D3D3;
+  
+   color: #113859; 
+    font-size:90%;
+    font-weight: bold;
+ }
+ 
+ .ui-datepicker {
+    background-color: #D3D3D3;
+   border: 1px solid #555; 
+   color: #113859; 
+    font-size:90%;
+    
+ }
+ 
+@font-face {
+    font-family: BAUHS93;
+    src: url("' + @{/common/font/OpenSans-Semibold.ttf} + '") format('opentype');
+}
+#form_pan
+{
+    /* background:#f0f0f0;*/
+}
+
+/* For using Master name(Eg: Country,State,City) */
+#frm_head
+{
+    background:#d6d6d6;
+    height:30px;
+    font-weight:bold;
+     font-family: OpenSans-Bold;
+    padding-left: 10px;
+    color:#443a3a;
+}
+
+/* For using label function */
+.frmtbl_td
+    {
+        font-family: OpenSans-Semibold;
+        font-size:12px;
+
+    }
+/* For using textbox function */
+.frmtbl_box
+   {
+    width:150px;
+    height:20px;
+
+   }
+
+  /* For using Button function */
+.frmbutton
+    {
+    width:60px; height:23px;  background:#ff9934; color:#000; border-radius: 5px; text-align:center; padding-top:3px;
+        font-family: OpenSans-Semibold;
+        margin-top:25px;cursor:pointer;border: none;float:left;
+     }
+
+/* For using Odd componant Td tag  */
+#frm_tbleodd
+{
+    border-bottom:#CCCCCC 0px solid;
+    height:25px;
+    padding-top:2px;
+    padding-bottom:2px;
+    background:#FFFFFF;
+}
+/* For using Even componant Td tag  */
+#frm_tbleven
+{
+    border-bottom:#CCCCCC 0px solid;
+    height:25px;
+    padding-top:2px;
+    padding-bottom:2px;
+    background:#f0f0f0;
+}
+
+/* For using List Name in head (Eg:Country List,State List) */
+#rpt_head
+{
+    background:#e5e5e5;
+    height:30px;
+    font-weight:bold;
+    text-align:center;
+    border-bottom: 1px solid #a1a1a1;
+    font-family: OpenSans-Bold;
+}
+
+
+/* For using List function in head (Eg:S.No,Name,Status)*/
+#trtable td
+{
+    background:#f0f0f0;
+    height:30px;
+    border-bottom: 1px solid #a1a1a1;
+    font-family: OpenSans-Semibold;
+}
+
+/* For using Odd rows in td tag (Designing Purpose To Saravanan Sir)*/
+#rpt_odd td
+{
+    background:#FFFFFF;
+    height:20px;
+    font-family: OpenSans-Regular;
+    font-size:13px;
+}
+
+/* For using Even rows in td tag (Designing Purpose To Saravanan Sir)*/
+#rpt_even td
+{
+    background:#e5e5e5;
+    height:20px;
+        font-family: OpenSans-Regular;
+        font-size:13px;
+}
+/* For using Odd List rows in td tag */
+ #myTable tbody tr:nth-child(odd)
+{
+
+    background:#FFFFFF;
+    height:28px;
+    font-family: OpenSans-Regular;
+    font-size:13px;
+}
+/* For using Even List rows in td tag */
+#myTable tbody tr:nth-child(even)
+{
+    background:#e5e5e5;
+    height:28px;
+    font-family: OpenSans-Regular;
+    font-size:13px;
+}
+
+
+.menu_default
+{
+    height:23px;
+    padding-top:7px; 
+    text-align:center;
+    font-family: OpenSans-Light;
+    color:#000;
+    font-size:14px;
+    font-weight:bold;
+}
+.menu_current
+{
+    height:29px;padding-top:7px; text-align:center;
+    font-family: OpenSans-Semibold;
+    color:#fff;
+    background:#363636;
+
+}
+.autname
+{
+    padding-top:7px; color:#000000; font-size:14px;
+    font-family: OpenSans-Light;
+
+}
+/* For using Logout function */
+.logout_css
+{
+     padding-top:5px; margin-left:10px; font-size:14px; font-weight:bold;
+     font-family: OpenSans-Semibold;color: black;
+}
+
+
+</style>
+</head>
+<body>
+
+
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                   <td width="45%" align="left" valign="middle"><img th:src="@{/common/images/thinksynq.png}"  align="absmiddle" /></td>
+                   
+            <td width="33%" align="left" valign="middle"><img th:src="@{/common/images/company.png}"  align="absmiddle" /></td>
+                                                           
+                    <td width="34%" align="right" valign="middle"><img th:src="@{/common/images/thinksynq.png}" align="absmiddle" /></td>
+
+
+
+                </tr>
+    </table>
+
+
+
+
+<div id="menu_bar">
+<div style="width:206px; height:30px;  padding-top:7px; text-align:center; color:#000; float:left; "></div>
+
+
+<div style="width:350px; height:30px; float:right">
+   
+     <div style="float:left;cursor: pointer;font-weight: bold;" class="autname">
+     User : <b style="font-weight: bold;color: #ff0000" th:text="${session.headername}"></b>
+     </div>     
+        <div style="float:left;cursor: pointer;" class="autname" onclick="changePassword();"> &nbsp;&nbsp; Change Password</div>
+        <div style="float:left;" class="logout_css" ><img th:src="@{/common/images/settings.png}" />&nbsp;&nbsp;</div>
+        <a th:href="@{log.html?flag=0}" style="cursor: pointer;float: left;" class="logout_css">Logout
+</a>
+
+</div>
+
+</div>
+
+
+
+  
+<script type="text/javascript">
+
+
+function changePassword()
+{
+ $.ajax({
+    	 
+ 		 type:"GET" ,
+ 		 url:"changePassword" ,
+    	 success:function(response){
+    		 $('#tmsmainpage').html(response);
+    	 },
+    	 error:function(e){
+    		 alert("error");
+    	 }
+    	 
+     });
+	
+}
+	
+	
+
+</script>
+
+
+
+
+
+</body>
+</th:block>
+</html> 

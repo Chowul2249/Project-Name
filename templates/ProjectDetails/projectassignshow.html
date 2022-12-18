@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<body>
+<table id="myTable" width="100%;" style="margin-top:50px; border-collapse:collapse;">
+			<thead>
+				<tr>
+					<td colspan="8" id="rpt_head">Project Assign Details</td>
+				
+				</tr>
+				
+								
+				<tr id="trtable">
+				<td width="2%" >S.No</td>				
+				<td width="20%">Project Name</td>
+				<td width="20%">Client Name</td>
+				<td width="20%">Start Date</td>	
+				<td width="20%">End Date</td>
+				<td width="13%">Status</td>				
+				</tr>
+				</thead>
+				<tbody>			
+	
+	<th:block th:each="li,serialNO : ${list}" >
+	<tr>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNO.index+1 }"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${li.name}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${li.client}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.startdate, 'dd/MM/yyyy')}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.enddate, 'dd/MM/yyyy')}"></td>
+	
+	<td style="text-align: left;padding-left: 2%">
+	<th:block th:if="${li.status=='Y'}">Active</th:block>
+	<th:block th:if="${li.status=='N'}">In-Active</th:block>
+	</td>
+	</tr>
+	</th:block>
+	
+			</tbody>
+	</table>	
+	
+	<!-- <script type="text/javascript">
+	
+	
+	 $('#myTable').dataTable({
+			"aLengthMenu" : [ [ 20, 30, 40, -1 ], [ 20, 30, 40, "All" ] ],
+			"iDisplayLength" : 20,
+			
+		});	
+	</script> -->
+
+</body>
+</html>

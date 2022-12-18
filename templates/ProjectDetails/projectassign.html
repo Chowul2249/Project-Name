@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<body>
+<script>
+//<![CDATA[
+$(function() {
+    $( "#projectassign_frmdt" ).datepicker({
+    	dateFormat: 'dd/mm/yy',//check change
+    	  changeMonth: true,
+    	  changeYear: true,
+    	  yearRange: "1950:2050"
+    	
+    });
+ });
+ 
+$(function() {
+    $( "#projectassign_todt" ).datepicker({
+    	dateFormat: 'dd/mm/yy',//check change
+    	  changeMonth: true,
+    	  changeYear: true,
+    	  yearRange: "1950:2050"
+    	
+    });
+ });
+ 
+ function onmodule()
+ { 
+	 var id=$("#project_id").val();
+	 /* alert("Projectid"+id) */
+	 $.ajax ({
+			url:"loadprojectassingmodule",
+			type:"POST",
+			data:"id="+id,
+			success: function(response)
+			{ 
+				
+				$("#module2").html(jQuery(response).find("#module1").html());
+				$("#start").html(jQuery(response).find("#start").html());
+				$("#end").html(jQuery(response).find("#end").html());
+			}
+			});	 
+ } 
+ function onactivity()
+ { 
+	 var projectid=$("#project_id").val();
+	 
+	 var id=$("#module_id").val();
+	
+	 $.ajax ({
+			url:"loadprojectassingactivity",
+			type:"POST",
+			data:"id="+id+"&projectid="+projectid,
+			success: function(response){ 
+				
+				 $("#activity2").html(jQuery(response).find("#activity1").html());
+				 $("#modulestart").html(jQuery(response).find("#modulestart").html());
+				 $("#moduleend").html(jQuery(response).find("#moduleend").html());
+			}
+			});	 
+ } 
+
+ function saveprojectassign()
+ {
+	 $("#Error").hide();
+	 $("#Error1").hide();
+	 $("#Error2").hide();
+	 $("#Error3").hide();
+	 $("#Error4").hide();
+	 $("#Error5").hide();
+	 var projectid = $("#project_id").val();
+	 var moduleid = $("#module_id").val();
+	 var activityid = $("#projectact_id").val();
+	 var projectfrmdt = $("#projectassign_frmdt").val();
+	 var projecttodt = $("#projectassign_todt").val();
+	 var empbcode=$("input[name=empb_code]:checked").val();
+	 var x1=$.trim(projectid);
+	 var x2=$.trim(moduleid);
+	 var x3=$.trim(activityid);
+	 var x4=$.trim(projectfrmdt);
+	 var x5=$.trim(projecttodt);
+	 var x6=$.trim(empbcode);
+	 
+	 if(x1==0 || x2==0 /* || x3==0  */|| x4=="" || x5=="" || x6=="")
+	{
+		 if(x1==0)
+			 {
+			 $("#Error").show()
+			 }
+		 if(x2==0)
+		 {
+		 	$("#Error1").show()
+		 }
+		 if(x3==0)
+		 {
+		 	$("#Error2").show()
+		 }
+		 if(x4=="")
+		 {
+		 	$("#Error3").show()
+		 }
+		 if(x5=="")
+		 {
+		 	$("#Error4").show()
+		 }
+		 if(x6=="")
+		 {
+		 	$("#Error5").show()
+		 }
+	}
+	 else
+	  {
+	  
+			 var dataform=new FormData();
+	 
+			 dataform.append("projectid",projectid);
+			 dataform.append("moduleid",moduleid);
+			 dataform.append("activityid",activityid);
+			 dataform.append("projectfrmdt",projectfrmdt);
+			 dataform.append("projecttodt",projecttodt);
+			 dataform.append("empbcode",empbcode);
+			 $.ajax
+		     ({
+		       url: 'addprojectassign',
+		       type: 'POST',
+		       data: dataform,
+		       enctype :'multipart/form-data',
+		       processData: false,
+		 	   contentType : false,
+		       success: function(response)
+		       {
+		    	   jAlert("ProjectAssign Details Added successfully","Success");
+		         	$("#fulldiv").html(response);
+		         
+		       }
+		   });	 
+		}	 
+ }
+ function editProjectassign(id)
+ {
+	 //var id=$("#project_id").val();
+	 $.ajax({
+			
+			url : 'editprojectassign',
+			data: "id="+id,
+			type: 'POST',
+			success : function(response)
+			{
+				$("#halfdiv").html(response);
+			}	
+		});
+	 
+ }
+ function cancelprojectassign(){
+	// $.blockUI({ message: '<img src="resources/common/images/482.GIF"> loading... Just a moment...'});	
+	 $.ajax({
+	 		url : "project_assign_to_Emp",
+	 		type : "POST",
+	 		success : function(response) {	
+	 			//$.unblockUI();
+	 			$("#tmsmainpage").html(response);
+	 		},
+	 		error : function(e) {
+	 			alert('Error: ' + e);
+	 		}
+	 	});
+}
+
+//]]>
+
+</script>
+<div id="fulldiv">
+
+<div id="halfdiv">       
+     <table border="0" th:style="'width:50%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:8px; font-family: OpenSans-Semibold; font-weight:7px;'" align="left" id="form_pan">
+
+ 
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Project Assign - Add
+        </td>
+   </tr>
+ 
+   
+        <tr id="frm_tbleodd">
+
+            <td width="22%" class="frmtbl_td">Project Name</td>
+            <td width="50%">
+             
+
+           
+
+            <select id="project_id" name="project_id"  style="width:35%" th:onchange ="'javascript:onmodule();'">
+            <option value="0" >--Select Project--</option>
+             <option th:each="projectlist : ${projectlist}" th:value="${projectlist.id}" th:text="${projectlist.name}"></option>           
+           </select>
+           </td>           
+          <td width="10%"><span style="color:#ff0000; display: none" id="Error">Select Project</span></td>
+        </tr>
+
+		<tr id="frm_tbleven">
+            <td width="30%" class="frmtbl_td">Module Name</td>
+            <td width="50%">
+              <div id="module1">
+              <div id="module2">
+            <select id="module_id" name="module_id"  style="width:35%" th:onchange ="'javascript:onactivity();'" > <!-- -->
+            <option value="0" >--Select Module--</option>
+            <th:block  th:each="show:${moduleshow}" >            
+            <option th:value="${show.id}" th:text="${show.module_detail}"></option>
+             
+            </th:block>          
+            
+            </select> 
+            </div>
+            </div>
+          </td>
+         <td width="10%"> <span style="color:#ff0000; display: none" id="Error1">select Module</span></td>
+        </tr>
+      
+        <tr id="frm_tbleodd">
+            <td width="30%" class="frmtbl_td">Activity Name</td>
+            <td width="35%">
+            <div id="activity1">
+            <div id="activity2">
+            <select id="projectact_id" name="projectact_id"  style="width:35%">
+            <option value="0" >--Select Activity--</option>
+             <th:block  th:each="show:${activityshow}" >            
+            <option th:value="${show.id}" th:text="${show.activity_dts}"></option>
+             
+            </th:block> 
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Select Activity</span></td>
+        </tr>
+          <tr id="frm_tbleven">
+            <td width="30%" class="frmtbl_td">Project From Date</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;"  name="projectassign_frmdt" id="projectassign_frmdt" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error3">Select From Date</span></td>
+  		 </tr>
+  		  <tr id="frm_tbleodd">
+            <td width="30%" class="frmtbl_td">Project End Date</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;"  name="projectassign_todt" id="projectassign_todt" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error4">Select End Date</span></td>
+  		 </tr>
+
+  		
+                    <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:30%;" onclick="saveprojectassign();">Save</button>
+               
+               
+               	           <input type="reset" class="frmbutton" style="margin-left:2.5%;" th:value="Reset" onclick="cancelprojectassign();" ></input>
+					</td>
+					</tr>
+</table>
+<!--  <table border="0" th:style="'width:50%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:8px; font-family: OpenSans-Semibold; font-weight:7px;'" align="right" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Employee Assigned - Project And Assigned Date's
+        </td>
+   </tr> -->
+  <table border="0" th:style="'width:16.5%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:8px; font-family: OpenSans-Semibold; font-weight:7px;'" align="left" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Emp Assigned-Details
+        </td>
+   </tr>
+   
+        <tr id="frm_tbleodd">  
+        
+            <!-- <td width="12%" class="frmtbl_td">Employee's</td> -->
+            <td width="20%"><br />
+            <th:block th:each="EmployeeList : ${EmployeeList}">
+            <input type="radio" name="empb_code" id="empb_code"  style="text-align: center;padding-left: 2%"
+            th:value="${EmployeeList.empb_id}" th:text="${EmployeeList.empb_fname+' '+EmployeeList.empb_lname}"></input>
+            <br></br>
+            </th:block>            
+            </td> 
+     	 <td width="5%"><span style="color:#ff0000; display: none " id="Error5">Choose Employee</span></td>
+  		 </tr> 
+</table>
+ <table border="0" th:style="'width:16.5%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:8px; font-family: OpenSans-Semibold; font-weight:7px;'" align="left" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Project-Date
+        </td>
+   </tr>   
+               
+           <tr id="frm_tbleodd"> 
+           <td width="12%" class="frmtbl_td">Start:</td>
+               <td id="start"  style="color: red" th:text="${startdate}"></td>                  
+           </tr>             
+           <tr id="frm_tbleodd">             
+           <td width="12%" class="frmtbl_td">End:</td>          
+           <td id="end" style="color: red" th:text="${enddate}"></td>                
+           </tr> 
+</table>
+<table border="0" th:style="'width:16.5%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:8px; font-family: OpenSans-Semibold; font-weight:7px;'" align="left" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Module-Date
+        </td>
+   </tr>
+            <tr id="frm_tbleodd"> 
+           <td width="12%" class="frmtbl_td">Start:</td>
+               <td id="modulestart"  style="color: red" th:text="${modulestartdate}"></td>                  
+           </tr>             
+           <tr id="frm_tbleodd">             
+           <td width="12%" class="frmtbl_td">End</td>          
+           <td id="moduleend" style="color: red" th:text="${moduleenddate}"></td>                
+           </tr>    
+         
+</table>
+					
+	</div>		
+	
+			<table id="myTable" width="100%;" style="margin-top:50px; border-collapse:collapse;">
+			<thead>
+				<tr>
+					<td colspan="8" id="rpt_head">Project Assign to Employee Details</td>
+				
+				</tr>
+				
+								
+				<tr id="trtable">
+				<td width="2%" >S.No</td>				
+				<td width="20%">Project Name</td>
+				<td width="20%">Module Name</td>
+				<td width="20%">Activity Name</td>	
+				<td width="20%">Whom to Assign</td>
+				<td width="13%">From Date</td>				
+				<td width="15%">End Date</td>
+				<td width="12%">Edit</td>
+				</tr>
+				</thead>
+				<tbody>			
+<th:block th:if="${projectassignlistsize >0}">
+	<th:block th:each="li,serialNo : ${projectassignlist}" >
+	<tr>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNo.index+1 }"></td>
+	<td >
+	<th:block th:each="projectdetaillist : ${projectdetailshow}" th:if="${projectdetaillist.id==li.projectdelid}">
+	<th:block th:each="projectshow : ${projectshow}" th:if="${projectshow.id==projectdetaillist.project_id}" th:text="${projectshow.name}">
+	</th:block>
+	</th:block>
+	</td>
+	<td>
+	<th:block th:each="projectdetaillist : ${projectdetailshow}" th:if="${projectdetaillist.id==li.projectdelid}">
+	<th:block th:each="moduleshow : ${moduleshowdetails}" th:if="${moduleshow.id==projectdetaillist.module_id}" th:text="${moduleshow.module_detail}">
+	</th:block>
+	</th:block>
+	</td>
+	<!-- <td th:each="list : ${activityshowdets}" th:if="${list.id==li.activityid}" th:text="${list.activity_dts}"></td> -->
+	<td>
+	<th:block th:each="projectdetaillist : ${projectactivitylist}" th:if="${projectdetaillist.projectact_id==li.activityid}">
+	<th:block th:each="activityshow : ${activityshowdets}" th:if="${activityshow.id==projectdetaillist.activity_id}" th:text="${activityshow.activity_dts}">
+	</th:block>
+	</th:block>
+	</td>
+	
+	
+	<td th:each="employeelist : ${employeelist}" th:if="${employeelist.empb_id==li.empcode}" 
+	th:text="${employeelist.empb_fname+' '+employeelist.empb_lname}"></td>
+	
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.projectassignfrmdt, 'dd/MM/yyyy')}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.projectassigntodt, 'dd/MM/yyyy')}"></td>
+	
+	<td th:style="'text-align: left;padding-left: 2%'"><a th:onclick="'javascript:editProjectassign('+${li.projectassign}+')'">
+	<img th:style="'width:16px; height:16px;'" alt="" th:src="@{/common/images/edit.png}"></img></a></td>
+	</tr>
+	</th:block>
+	</th:block>
+	</tbody>
+	</table>	
+	</div>
+<script type="text/javascript">
+	
+	
+	 $('#myTable').dataTable({
+			"aLengthMenu" : [ [ 20, 30, 40, -1 ], [ 20, 30, 40, "All" ] ],
+			"iDisplayLength" : 20,
+			
+		});	
+	</script>
+ </body>
+</html>

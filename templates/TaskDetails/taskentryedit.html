@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<th:block th:fragment="taskentrypage">
+<head>
+<script th:src="@{/Tms/Masters/taskentry.js}"></script>
+</head>
+<body>
+
+<div id="fulldiv">
+<input type="hidden" th:value="${return_status}" id="returnMsg"/>
+
+<div id="halfdiv">
+<input type="hidden" th:value="${status}" id="status"/>
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Update- Report Entry
+        </td>
+   </tr>
+ 
+  <tr><td>
+<input type="hidden" name="id" id="id" th:value="${object.id}" class="form-control"></input>
+</td></tr>
+ 
+   
+        <tr id="frm_tbleodd">
+
+            <td width="22%" class="frmtbl_td">Date</td>
+            <td width="30%">
+            <input type="text" name="date" id="date" th:value="${#dates.format(object.taskentry_date, 'dd/MM/yyyy')}" readonly="readonly"></input>
+            </td>           
+          <td width="10%"><span style="color:#ff0000; display: none" id="Error">Please choose date</span></td>
+        </tr>
+
+	   <tr id="frm_tbleven">
+
+            <td width="22%" class="frmtbl_td">From time</td>
+            <td width="30%">
+           <input type="text" name="shiftFrom" id="shiftFrom"  onclick="from_function();" readonly="readonly" th:value="${object.taskentry_frmtime}"/>
+
+            </td>           
+          <td width="10%"><span style="color:#ff0000; display: none" id="Error1">Please choose FromTime</span></td>
+        </tr>
+      
+          <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">To Time</td>
+            <td width="30%">
+         		<input type="text" name="shiftTo" id="shiftTo"  onclick="To_Function();" th:value="${object.taskentry_totime}" readonly="readonly"/>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Please choose ToTime</span></td></tr>
+  		  
+  		  
+  		  <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Difference Time</td>
+            <td width="30%">
+     		<input type="text" name="shift" id="shift" th:value="${object.taskentry_totmin}"/>
+     		
+        </td>
+         <td width="10%"> <span style="color:#ff0000; display: none" id="Error3">Please Enter Hours</span></td>
+        </tr>
+            <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Entry Type</td>
+            <td width="30%">
+         		<input type="radio" name="tasktype" id="tasktype" value="O"  th:checked="${object.taskentry_type.equals('O')}" onclick="Other_Fucntion();"/>Others 
+         		<input type="radio" name="tasktype" id="tasktype" value="T" th:checked="${object.taskentry_type.equals('T')}" onclick="Task_Function();"/>Task
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error4">Please choose the Entry Type</span></td></tr>
+  		  
+  		  <th:if text="${status=='O'}">
+  		  <tr id="othertask">
+            <td width="22%" class="frmtbl_td">OtherActivity</td>
+            <td width="30%">
+         		<select name="otheract_id" id="otheract_id">
+         		<option value="0" >Select OtherActivity</option>	
+         		<!-- <option  th:each="otheractivityList : ${otheractivityList}" th:value="${otheractivityList.id}" th:text="${otheractivityList.otheract_det}"></option> -->
+         		<th:block  th:each="otheractivityList:${otheractivityList}" >            
+                 <option th:value="${otheractivityList.id}" th:selected="${object.otheract_id==otheractivityList.id}"  th:text="${otheractivityList.otheract_det}"></option>
+             
+            </th:block> 
+         		</select>
+         		</td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error5">Please choose the other Activity</span>
+                 
+        
+         		
+       </td>
+       
+       </tr>
+ </th:if>
+ 
+ <th:if text="${status=='T'}">
+  		  
+  		   <tr id="tasktask">
+            <td width="22%" class="frmtbl_td">Project</td>
+            <td width="30%">
+         		<select style="width:35%" th:onchange ="'javascript:onmodule();'" id="project_id" name="project_id">
+         		<option value="0">Select Project</option>
+         		<th:block  th:each="projectlist : ${projectlist}">            
+               <option th:value="${projectlist.id}" th:selected="${object.project_id==projectlist.id}"  th:text="${projectlist.name}"></option>           
+               </th:block>
+         		</select>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error6">Please choose the Project</span>
+          </td>
+          </tr>
+          
+          <tr id="tasktask1">
+            <td width="22%" class="frmtbl_td">Module</td>
+            <td width="30%">
+             <div id="module2">
+              <div id="module1">
+         		<select id="module_id" name="module_id"  style="width:35%" th:onchange ="'javascript:onactivity();'" >
+         		<option value="0">Select Module</option>
+         		<th:block  th:each="modulelist:${modulelist}" >            
+                 <option th:value="${modulelist.id}" th:selected="${object.module_id==modulelist.id}"  th:text="${modulelist.module_detail}"></option>
+             
+            </th:block> 
+         		</select>
+         		</div>
+         		</div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error7">Please choose the Module</span>
+          </td>
+          </tr>
+  		  
+  		  <tr id="tasktask2">
+            <td width="22%" class="frmtbl_td">Activity</td>
+            <td width="30%">
+         	<div id="activity1">
+            <div id="activity2">
+            <select id="projectact_id" name="projectact_id"  style="width:35%">
+         		<option value="0">Select Activity</option>
+         		<th:block  th:each="list:${list}" >            
+             <!--   <option th:value="${show.id}" th:text="${show.activity_dts}"></option> -->
+             <option th:value="${list.id}" th:selected="${object.projectact_id==list.id}"  th:text="${list.activity_dts}"></option>
+            </th:block>
+         		</select>
+         	</div>
+         	</div>
+          </td>
+                    <td width="48%"><span style="color:#ff0000; display: none" id="Error8">Please choose the Activity</span>
+          </td></tr>
+  		  
+  		  <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Task entry Detail</td>
+            <td width="30%">
+     		<textarea rows = "3" cols = "20" name ="taskdetails" id="taskdetails" th:text="${object.taskentry_detail}"></textarea>
+        </td>
+         <td width="10%"> <span style="color:#ff0000; display: none" id="Error9">Please Enter the Task Details</span></td>
+        </tr>
+  		  </th:if>
+  		  
+  		   <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Task entry Problem</td>
+            <td width="30%">
+         		<textarea rows = "3" cols = "20" name ="taskprbldetails" id="taskprbldetails" th:text="${object.taskentry_prob}"></textarea>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error10">Please Enter the Task problem</span></td></tr>
+  		  
+  		  
+  		  <tr>
+                    <td colspan="3" >
+                   
+		                  <button class="frmbutton" style="margin-left: 22%;" onclick="Taskentry_Function_Update();">Update</button>
+
+
+							<input type="reset" class="frmbutton" style="margin-left:2.5%;" th:value="Reset" onclick="canceltaskentry();" ></input>
+					</td>
+					</tr>
+</table>
+</div>
+</div>
+<script type="text/javascript">
+	 function start(err_id) {
+			
+				var error = $("#returnMsg").val();
+		
+				if (error.length == 0) {
+
+					if (err_id == 1) {
+						jAlert("Task Entery Successfully", "Success");
+					} else if (err_id == 2) {
+						jAlert("Task Updated Successfully", "Success");
+					} else if (err_id == 3) {
+						jAlert("Evaluation Master Deleted Successfully", "Success");
+					}					
+				}
+				else if(error=="Data Integrity Exception") {
+					 
+					jAlert("Data Already Present", "Success");
+				 
+				}
+				else if(err_id=="Data Already Present") {
+					 
+					jAlert("Data Already Present", "Error");
+				 
+				}
+				else {
+					jAlert("Data Alredy Exist", "Success");
+				}
+			}
+</script>
+</body>
+</th:block>
+</html>

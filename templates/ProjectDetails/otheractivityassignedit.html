@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Insert title here</title>
+</head>
+<body>
+<div id="fulldiv">
+
+<div id="halfdiv">
+       
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+
+ 
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Other Activity Update - Add
+        </td>
+   </tr>
+   <tr>
+ <td>
+<input type="hidden" name="otheractassign_id" id="otheractassign_id" class="form-control" th:value="${object.otheractassign_id}" ></input>
+</td>
+</tr>
+   
+        <tr id="frm_tbleodd">
+
+            <td width="22%" class="frmtbl_td">Employee Name</td>
+            <td width="30%">
+           
+
+            <select id="empb_code" name="empb_code"  style="width:35%">
+            <option value="0" >--Select Employee Name--</option>
+            <option th:each="EmployeeList : ${EmployeeList}" th:selected="${object.empb_id==EmployeeList.empb_id}"
+            		
+            		th:text="${EmployeeList.empb_fname}"
+            		th:value="${EmployeeList.empb_id}"></option>
+                    
+           </select>
+           </td>           
+          <td width="10%"><span style="color:#ff0000; display: none" id="Error">Select Employee</span></td>
+        </tr>
+
+		<tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Other Activity Name</td>
+            <td width="30%">
+             
+            <select id="otheract_id" name="otheract_id"  style="width:35%" > <!-- -->
+            <option value="0" >--Select other activity--</option>       
+            <option th:each="otheractivityList : ${otheractivityList}" th:selected="${object.otheract_id==otheractivityList.id}"
+            		th:value="${otheractivityList.id}"
+            		th:text="${otheractivityList.otheract_det}">
+            </option>           
+            </select> 
+           
+          </td>
+         <td width="10%"> <span style="color:#ff0000; display: none" id="Error1">select Module</span></td>
+        </tr>
+      
+        <!-- <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Assign Employee Code</td>
+            <td width="30%">
+                    <input type="text" style="width: 35%;"  name="assign_empcode" id="assign_empcode"></input>  
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Select Assign Code</span></td>
+        </tr> -->
+          <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Status</td>
+            <td width="30%">
+            <select id="otheractassign_status" name="otheractassign_status"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y" th:selected="${object.otheractassign_status=='Y'}">Active</option>
+            <option value="N" th:selected="${object.otheractassign_status=='N'}">Inactive</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error3">Select Status</span></td></tr>
+  		  <tr>
+                    <td colspan="3" >
+                   
+		                  <button class="frmbutton" style="margin-left: 22%;" onclick="saveotheractivityassignupdate()">Update</button>
+
+
+							<input type="reset" class="frmbutton" style="margin-left:2.5%;" th:value="Reset" onclick="cancelOAA();"></input>
+					</td>
+					</tr>
+</table>
+</div>
+</div>
+
+</body>
+</html>

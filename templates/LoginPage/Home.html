@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+th:style="'background:url(' + @{/common/images/landing3.jpg} + '); 
+background-repeat:no-repeat;
+  background-position: center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+   background-position: 30% 35%;'">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Task Management System</title>
+
+<link rel="stylesheet" type="text/css"  th:href="@{/common/css/admin_css.css}" />
+<link rel="stylesheet" type="text/css"  th:href="@{/common/css/html_css.css}" />
+<script language="javascript" th:src="@{/common/js/admin_screen.js}"></script>
+<script language="javascript" th:src="@{/common/js/jquery-latest.js}"></script>
+<script language="javascript" th:src="@{/common/js/page_layout.js}"></script>
+<script language="javascript" th:src="@{/common/project_menu/accordion_menu.js}"></script>
+<!-- <script th:src="@{/common/js/jquery-DOM.js}"></script>  -->
+<script type="text/javascript">
+
+function getForgetPass() {
+	$("#showpaswd").show();
+	document.getElementById("login").disabled = true;
+}
+
+</script>
+	 
+</head>
+
+<body>
+
+<header style="background:#f7f7f8">
+
+			 
+			   <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="45%" align="left" valign="middle"><img th:src="@{/common/images/thinksynq.png}"  align="absmiddle" /></td>
+                   
+            <td width="33%" align="left" valign="middle"><img th:src="@{/common/images/company.png}"  align="absmiddle" /></td>
+                                        
+<!--              <td width="33%" align="left" valign="middle"><img src="resources/common/images/rsz_bodyfuelz_black_logo.png" style="height: 17%;width: 25%;" align="absmiddle" /></td> -->
+                  
+<!--                    <td width="33%" align="left" valign="middle"><img src="resources/common/images/rsz_hpl_logo.png" style="height: 50px;"  align="absmiddle" /></td>  -->
+                    
+<!--                <td width="33%" align="left" valign="middle"><img src="resources/common/images/logo ABPL.jpg" style="height: 50%;width: 25%;"  align="absmiddle" /></td> -->
+                    
+                    
+                    <td width="34%" align="right" valign="middle"><img th:src="@{/common/images/thinksynq.png}" align="absmiddle" /></td>
+
+                </tr>
+    </table>
+	
+	
+</header>
+
+
+<div id="section">
+     <form th:action="@{doLogin}" th:object="${doLogin}" method="post">
+
+
+		<div id="log_box" th:style="'width:500px; height:180px;margin-top:225px;margin-left:518px; border:#FF0000 0px solid; overflow:hidden; background:url(' + @{/common/images/login_bk.png} +') no-repeat;'">
+	
+	
+			
+			<table width="100%" align="center" border="0" th:style="'border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-top:0px;'">
+			<tr>
+				<td style="height:30px;"></td>
+			
+			</tr>
+			
+			<tr>
+				<td align="center" colspan="2"><input type="text"  name="username" id="u_name" placeholder=" User Name" th:style="'width:400px; height:25px; background:#fff; border:none; margin-bottom:20px;'"/></td>
+			
+			</tr>
+			
+			<tr>
+				<td align="center" colspan="2"><input type="password" name="pass" id="u_pass" placeholder=" Password" th:style="'width:400px; height:25px; background:#fff; border:none;'"/></td>
+			
+			</tr>
+			
+			<tr>
+			     <td>
+			     <h4 th:style="'color: red;text-align: center;'" th:text="${message}"></h4>
+			     <h4 th:style="'color: red;text-align: center;'" th:text="${emptyMessage}"></h4>
+			     <h4 th:style="'color: red;text-align: center;'" th:text="${message1}"></h4>
+			     <span id="divMayus" th:style="'color: red; display: none;'"><i th:style="'color: red;padding-left: 5px;'">YOUR CAPS LOCK IS ON</i></span>
+				 <span id="divMayus1" th:style="'color: red; display: none;'"><i th:style="'color: red;padding-left: 5px;'">YOUR CAPS LOCK IS OFF</i></span>
+			     
+			     </td>
+				<td align="right">
+     <a onclick="getForgetPass();"  th:style="'float:left; margin-top:5px; margin-right:50px; text-align:center; color:#fff; font-weight:bold; padding-top:7px; cursor:pointer; border: none;color: #ff9934;padding-left: 5px;'">Forgot Password</a>		
+ 		<button id="login" type="submit" th:style="'width:100px; height:33px; background:#ff9934; margin-top:5px; margin-right:50px; text-align:center; color:#fff; font-weight:bold; padding-top:7px; cursor:pointer; border: none;'">Login</button></td>
+			
+			</tr>
+		
+			
+				</table>
+	
+	</div>
+
+
+	<div id="showpaswd" th:style="'width:500px; height:130px;margin-top:8px;display: none;margin-left:518px; border:#FF0000 0px solid; overflow:hidden; background:url(' + @{/common/images/login_bk.png} + ') no-repeat;'">
+	
+	
+			
+			<table width="100%" align="center" border="0" th:style="'border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-top:0px;'">
+			<tr>
+				<td style="height:30px;"></td>
+			
+			</tr>
+
+			<tr>
+				<td align="center" colspan="2">
+				<input type="text" id="empCode" th:style="'width:400px; height:25px; background:#fff; border:none; margin-bottom:20px;'" placeholder="Enter Youe Employee Code" /></td>
+			
+			</tr>
+			
+			<tr >
+			
+			<td align="right">
+			
+			<button id="login" type="submit" th:style="'width:150px; height:33px; background:#ff9934; margin-top:5px; margin-right:50px; text-align:center; color:#fff; font-weight:bold; padding-top:7px; cursor:pointer; border: none;'" onclick="forgotPassWord();">Send My mail</button></td>
+			</tr>
+			
+				</table>
+	
+	
+	
+	
+	
+	
+	
+			
+	
+	
+	
+	</div>
+
+
+
+
+</form>
+
+</div>
+
+<footer>
+	<span  id="foot_lbl"  th:style="'font-size:12px; font-weight:bold;  color:#666666;'"> Product by www.thinksynq.in</span>
+</footer>  
+
+
+
+<script>
+//<![CDATA[
+/* this.Alpha_Numeric = function(myfield, e, dec){
+		var key;
+		var keychar;
+		 
+		if (window.event)
+		   key = window.event.keyCode;
+		else if (e)
+		   key = e.which;
+		else
+		   return true;
+		keychar = String.fromCharCode(key);
+		 
+		// control keys
+		if ((key==null) || (key==0) || (key==8) || 
+			(key==9) || (key==13) || (key==27) || (key==32) ||(key >= 65 && key <= 90) || (key >= 97 && key <= 122))
+		   return true;
+		  // numbers
+		else if ((("0123456789").indexOf(keychar) > -1))
+		   return true;
+		 else
+		   return false;
+	} */
+	$(document).ready(function()
+			{
+			    $("#u_name").keydown(function (e)
+			    {
+			       
+			    	if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+			            
+			            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+			             
+			            (e.keyCode >= 35 && e.keyCode <= 40))
+			    	{
+			                
+			                 return;
+			        }
+			       	if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))
+			        {
+			            e.preventDefault();
+			        }
+			    });
+			})           
+
+$(document).ready(function()
+			{
+			    $("#u_pass").keydown(function (e)
+			    {
+			       
+			    	if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+			            
+			            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+			             
+			            (e.keyCode >= 35 && e.keyCode <= 40))
+			    	{
+			                
+			                 return;
+			        }
+			       	if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))
+			        {
+			            e.preventDefault();
+			        }
+			    });
+			})
+			
+function forgotPassWord()
+{
+
+	var empCode=$("#empCode").val().replace(/^\s*|\s*$/g,"");
+
+	$.ajax({
+        type : "POST",
+        url  : "forgotPassWord",
+        data :"empCode="+empCode,
+        success :function(response) {
+        	 jAlert("Your New Password has send on your mail","Success");
+        	 $("#section").html(response);
+        	
+        	
+        },
+        error :function(e) {
+           
+       
+        }
+   });
+}
+//]]>
+</script>
+
+
+
+ 
+
+
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<body>
+<table id="myTable" width="100%;" style="margin-top:50px; border-collapse:collapse;">
+			<thead>
+				<tr>
+					<td colspan="8" id="rpt_head">Project Task Assign Details</td>
+				
+				</tr>
+				
+								
+				<tr id="trtable">
+				<td width="2%" >S.No</td>				
+				<td width="20%">Project Name</td>
+				<td width="20%">Module Name</td>
+				<td width="20%">Activity Name</td>	
+				<td width="20%">From Date</td>
+				<td width="13%">End Date</td>				
+				</tr>
+				</thead>
+				<tbody>			
+<th:block th:if="${projectassignlistsize >0}">
+	<th:block th:each="li,serialNo : ${projectassignlist}" >
+	<tr>
+	<td style="text-align: left;padding-left: 2%" th:text="${serialNo.index+1 }"></td>
+	<td >
+	<th:block th:each="projectdetaillist : ${projectdetailshow}" th:if="${projectdetaillist.id==li.projectdelid}">
+	<th:block th:each="projectshow : ${projectshow}" th:if="${projectshow.id==projectdetaillist.project_id}" th:text="${projectshow.name}">
+	</th:block>
+	</th:block>
+	</td>
+	<td>
+	<th:block th:each="projectdetaillist : ${projectdetailshow}" th:if="${projectdetaillist.id==li.projectdelid}">
+	<th:block th:each="moduleshow : ${moduleshowdetails}" th:if="${moduleshow.id==projectdetaillist.module_id}" th:text="${moduleshow.module_detail}">
+	</th:block>
+	</th:block>
+	</td>
+
+	<td>
+	<th:block th:each="projectdetaillist : ${projectactivitylist}" th:if="${projectdetaillist.projectact_id==li.activityid}">
+	<th:block th:each="activityshow : ${activityshowdets}" th:if="${activityshow.id==projectdetaillist.activity_id}" th:text="${activityshow.activity_dts}">
+	</th:block>
+	</th:block>
+	</td>
+	
+	
+	<!-- <td th:each="employeelist : ${employeelist}" th:if="${employeelist.empb_id==li.empcode}" 
+	th:text="${employeelist.empb_fname+' '+employeelist.empb_lname}"></td> -->
+	
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.projectassignfrmdt, 'dd/MM/yyyy')}"></td>
+	<td style="text-align: left;padding-left: 2%" th:text="${#dates.format(li.projectassigntodt, 'dd/MM/yyyy')}"></td>
+	</tr>
+	</th:block>
+	</th:block>
+	</tbody>
+	</table>	
+	<!-- 
+	<script type="text/javascript">
+	
+	
+	 $('#myTable').dataTable({
+			"aLengthMenu" : [ [ 20, 30, 40, -1 ], [ 20, 30, 40, "All" ] ],
+			"iDisplayLength" : 20,
+			
+		});	
+	</script> -->
+</body>
+</html>

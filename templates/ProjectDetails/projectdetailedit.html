@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<!-- <script th:src="@{/Tms/Masters/projectdetails.js}"></script>  -->
+<script>
+
+$(function() {
+	var startdate = $("input[name='projectdet_adddt']",this).val();
+	  
+    $( "#projectdet_adddt" ).datepicker({
+    	dateFormat: 'dd/mm/yy',//check change
+    	  changeMonth: true,
+    	  changeYear: true,
+    	  yearRange: "1950:2050",
+    	  minDate: startdate
+    });
+ });
+ 
+$(function() {
+	var startdate = $("input[name='projectdet_adddt']",this).val();
+    $( "#projectdet_closedt" ).datepicker({
+    	dateFormat: 'dd/mm/yy',//check change
+    	  changeMonth: true,
+    	  changeYear: true,
+    	  yearRange: "1950:2050",
+    	  minDate: startdate
+    });
+ });
+
+(function($){
+	  var $form = $('#editProjectdetail');  
+	  $form.on('submit', function(e) {
+	  
+		  var project_id = $("select[name='project_id']",this).val();
+		  var module_id = $("select[name='module_id']",this).val();
+		  var projectdet_status = $("select[name='projectdet_status']",this).val();
+		  var projectdet_adddt = $("input[name='projectdet_adddt']",this).val();
+		  var projectdet_closedt = $("input[name='projectdet_closedt']",this).val();
+
+			
+		  if(project_id==0 || module_id==0 || projectdet_status==0 || projectdet_adddt=="" || projectdet_closedt=="")
+			   {
+			  	e.preventDefault();
+			  	 if(project_id==0)
+					{
+						$("#Error1").show()
+					}
+					if(module_id==0)
+					{
+						$("#Error2").show()
+					} 
+					 if(projectdet_status==0)
+						{
+							$("#Error3").show()
+						}
+						if(projectdet_adddt=="")
+						{
+							$("#Error4").show()
+						} 
+			  if(projectdet_closedt=="")
+				{
+					$("#Error5").show()
+				}
+				
+			   }
+		  else
+			  {
+		  
+		  
+	    e.preventDefault();
+	    $.ajax({
+	      url: $form.attr('action'),
+	      type: 'post',
+	      data: $form.serialize(),
+	      success: function(response) {
+	        // if the response contains any errors, replace the form
+	        if ($(response).find('.has-error').length) {
+	          $form.replaceWith(response);
+	        } else {
+	        	jAlert("Project Details updated successfully","Success");
+	        	$("#fulldiv").html(response);
+	          // in this case we can actually replace the form
+	          // with the response as well, unless we want to 
+	          // show the success message a different way
+	        }
+	      }
+	  });
+			  }
+	})
+	}(jQuery));
+
+function loadmodule()
+{
+	var project_id=$("#project_id").val(); 
+	$.ajax ({
+		url:"projectdetailsloadmodule", 
+		type:"POST",
+		data:"id="+project_id,
+		success: function(response){ 
+			 $("#module2").html(jQuery(response).find("#module1").html());
+			 
+		}
+		});
+}
+</script>
+</head>
+<body>
+
+<div id="fulldiv">
+ <form th:action="@{editProjectdetail}" th:object="${editProjectdetail}" method="post" id="editProjectdetail">       
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		ProjectDetails - Add
+        </td>
+   </tr>
+    <tr>
+<td>
+<input type="hidden" name="id" id="id" class="form-control" th:value="${editprojectdetails.id}" ></input>
+</td>
+</tr>
+<tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Project Name</td>
+            <td width="35%">
+            <select name="project_id" id="project_id" style="width:35%" th:onchange ="'javascript :loadmodule();'">
+            <option value="0">--Select Project--</option>
+            <th:block  th:each="projectlist : ${projectshow}">
+            <th:if test= "${projectlist.status=='Y' }"> 
+            <option th:value="${projectlist.id}" th:selected="${editprojectdetails.project_id==projectlist.id}" th:text="${projectlist.name}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error1">Select Project Name</span></td>
+        </tr>
+
+<tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Module Name</td>
+            <td width="35%">
+            <div id="module1">
+            <div id="module2">
+            <select name="module_id" id="module_id" style="width:35%">
+            <option value="0">--Select Module--</option>
+            <th:block  th:each="modulelist : ${moduleshow}">
+            <th:if test= "${modulelist.module_status=='Y' }"> 
+            <option th:value="${modulelist.id}" th:selected="${editprojectdetails.module_id==modulelist.id}" th:text="${modulelist.module_detail}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Select Module Name</span></td>
+        </tr>
+
+    <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Status</td>
+            <td width="35%">
+            <select id="projectdet_status" name="projectdet_status"  style="width:35%">
+            <option value="0" >Select Status</option>
+            <option value="Y" th:selected="${editprojectdetails.projectdet_status=='Y'}">Active</option>
+            <option value="N" th:selected="${editprojectdetails.projectdet_status=='N'}">Inactive</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error3">Select Status</span></td>
+        </tr>
+
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Module StartDate</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="projectdet_adddt" id="projectdet_adddt" th:value="${#dates.format(editprojectdetails.projectdet_adddt, 'dd/MM/yyyy')}" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error4">Enter Module StartDate</span></td>
+   </tr>
+
+      <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Module EndDate</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="projectdet_closedt" th:value="${#dates.format(editprojectdetails.projectdet_closedt, 'dd/MM/yyyy')}" id="projectdet_closedt" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error5">Enter Module EndDate</span></td>
+   </tr>
+     
+     
+                     <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:22%;" >Update</button>
+               
+               	       <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="cancelProjectD();" th:value="Reset"></input>
+					</td>
+					</tr>
+</table>
+
+</form>
+					
+	</div>
+
+</body>
+</html>

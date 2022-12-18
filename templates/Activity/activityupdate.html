@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<script th:src="@{/Tms/Masters/activity.js}"></script>
+</head>
+<body>
+<div id="fulldiv">
+
+<form th:action="@{activityupdate}" th:object="${activityupdate}" method="post" id="activityupdate" >
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Activity - Update
+        </td>
+   </tr>
+   
+   <tr><td>
+<input type="hidden" name="id" id="id" th:value="${object.id}" class="form-control"></input>
+</td></tr>
+   
+  <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Activity</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="activity_dts" th:value="${object.activity_dts}" id="activity_dts"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error1">Enter Activity</span></td>
+   </tr>
+
+
+
+        <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Status</td>
+            <td width="35%">
+            <select id="activity_status" name="activity_status"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y" th:selected="${object.activity_status.equals('Y')}">Active</option>
+            <option value="N" th:selected="${object.activity_status.equals('N')}">Inactive</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error2">Select Status</span></td>
+        </tr>
+
+
+                     <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:22%;" >Update</button>
+                <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="cancelActivity();" th:value="Reset"></input>
+               	          
+					</td>
+					</tr>
+</table>
+
+</form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+<script>
+//<![CDATA[
+$(function() {
+	var startdate = $("input[name='startdate']",this).val();
+	  
+    $( "#startdate" ).datepicker({
+    	dateFormat: 'dd/mm/yy',//check change
+    	  changeMonth: true,
+    	  changeYear: true,
+    	  yearRange: "1950:2050",
+    	  minDate: startdate
+    });
+ });
+ 
+$(function() {
+	var startdate = $("input[name='startdate']",this).val();
+    $( "#enddate" ).datepicker({
+    	dateFormat: 'dd/mm/yy',//check change
+    	  changeMonth: true,
+    	  changeYear: true,
+    	  yearRange: "1950:2050",
+    	  minDate: startdate
+    });
+ });
+ 
+function upstate(){
+	 
+	var cno=document.getElementById("country").value;	
+	
+	$.ajax ({
+		url:"Upstate",
+		type:"POST",
+		data:"cno="+cno,
+		success: function(response){
+			$("#state2").html(jQuery(response).find("#state3").html());
+		}
+		});
+ }
+ 
+ function upcity(){
+	 
+	var state=document.getElementById("state").value;	
+	
+	$.ajax ({
+		url:"Upcity",
+		type:"POST",
+		data:"id="+state,
+		success: function(response){
+			$("#state4").html(jQuery(response).find("#state1").html());
+		}
+		});
+ }
+ (function($){
+	  var $form = $('#projectdetailsedit');
+	  $form.on('submit', function(e) {
+		  var name = $("input[name='name']",this).val();
+		  var client = $("input[name='client']",this).val();
+		  var endpoint = $("select[name='endpoint']",this).val();
+		  var startdate = $("input[name='startdate']",this).val();
+		  var enddate = $("input[name='enddate']",this).val();
+		  var extend = $("select[name='extend']",this).val();
+		  var contactnumber = $("input[name='contactnumber']",this).val();
+		  var country = $("select[name='country']",this).val();
+		  var state = $("select[name='state']",this).val();
+		  var city = $("select[name='city']",this).val();
+		  var address = $("textarea[name='address']",this).val();
+		  var status = $("select[name='status']",this).val();
+			
+		  
+		  
+		  if(name=="" || client==""|| endpoint==0 || startdate==""|| enddate=="" || extend==0 || contactnumber=="" || contactnumber.length!=10 || country==0 || state==0 || city==0 ||address=="" || status==0)
+			   {
+			  	e.preventDefault();
+			  	 if(name=="")
+				 {
+				    $("#Error1").show()
+				 }
+				 if(client=="")
+				 {
+				 	$("#Error2").show()
+				 }
+				 if(endpoint==0)
+				 {
+					 $("#Error3").show()
+				 }
+				 if(startdate=="")
+				 {
+				 	$("#Error4").show()
+				 }
+				 if(enddate=="")
+				 {
+				 	$("#Error5").show()
+				 }
+				 if(extend==0)
+				 {
+					 $("#Error6").show()
+				 }
+				 if(contactnumber=="" || contactnumber.length!=10)
+				 {
+				 	$("#Error7").show()
+				 }
+				 if(country==0)
+				 {
+				 	$("#Error8").show()
+				 }
+				 if(state==0)
+				 {
+				 	$("#Error9").show()
+				 }
+				 if(city==0)
+				 {
+					 $("#Error10").show()
+				 }
+				 if(address=="")
+				 {
+				 	$("#Error11").show()
+				 }
+				 if(status==0)
+				 {
+					 $("#Error12").show()
+				 } 
+			   }
+		  else
+			  {
+		  
+		  
+	    e.preventDefault();
+	    $.ajax({
+	      url: $form.attr('action'),
+	      type: 'POST',
+	      data: $form.serialize(),
+	      success: function(response) {
+	        if ($(response).find('.has-error').length) {
+	          $form.replaceWith(response);
+	        } else {
+	        	jAlert("Project updated successfully","Success");
+	        	$("#fulldiv").html(response);
+	        }
+	      }
+	  });
+			  }
+	})
+	}(jQuery));
+
+
+ 
+//]]>
+ 
+</script>
+</head>
+<body>
+ <div id="fulldiv">
+ 
+ <form th:action="@{projectdetailsedit}" th:object="${projectdetailsedit}" id="projectdetailsedit" method="post">
+     <table border="0" th:style="'width:100%; border-collapse:collapse; border-collapse:collapse;font-size:12px; margin-top:15px; font-family: OpenSans-Semibold; font-weight:14px;'" align="center" id="form_pan">
+    <tr>
+        <td colspan="3" id="frm_head">
+       		Project Details - Update
+        </td>
+   </tr>
+   
+   <tr>
+<td>
+<input type="hidden" name="id" id="id" class="form-control" th:value="${object.id}" ></input>
+</td>
+</tr>
+   
+  <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project Name</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="name" id="name" th:value="${object.name}"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error1">Enter Project</span></td>
+   </tr>
+   
+  <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Client Name</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="client" id="client" th:value="${object.client}"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error2">Enter client</span></td>
+   </tr>
+
+
+
+        <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project Endpoint</td>
+            <td width="35%">
+            <select id="endpoint" name="endpoint"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y" th:selected="${object.endpoint.equals('Y')}">Yes</option>
+            <option value="N" th:selected="${object.endpoint.equals('N')}">No</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error3">Select Endpoint</span></td>
+        </tr>
+
+
+  <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Project StartDate</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="startdate" id="startdate" th:value="${#dates.format(object.startdate, 'dd/MM/yyyy')}" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error4">Enter Project StartDate</span></td>
+   </tr>
+
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Project EndDate</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="enddate" id="enddate" th:value="${#dates.format(object.enddate, 'dd/MM/yyyy')}" readonly="readonly"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error5">Enter Project EndDate</span></td>
+   </tr>
+
+
+        <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Project Extends</td>
+            <td width="35%">
+            <select id="extend" name="extend"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y" th:selected="${object.extend.equals('Y')}">Yes</option>
+            <option value="N" th:selected="${object.extend.equals('N')}">No</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error6">Select Extends</span></td>
+        </tr>
+
+
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Client Number</td>
+            <td width="30%">
+           			<input type="text" style="width: 35%;" maxlength="60" name="contactnumber" id="contactnumber"  th:value="${object.contactnumber}" th:maxlength="10"></input>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error7">Invalid contact number</span></td>
+   </tr>
+   
+ <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Enter Client Country</td>
+            <td width="35%">
+            <select name="country" id="country" style="width:35%" th:onchange ="'javascript:upstate();'">
+            <option value="0">--Select Country--</option>
+            <th:block  th:each="countryList : ${countryList}">
+            <th:if test= "${countryList.status=='Y' }"> 
+            <option th:value="${countryList.id}" th:selected="${country==countryList.id}" th:text="${countryList.countryName}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error8">Select Country</span></td>
+        </tr>
+   
+
+   
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Enter Client State</td>
+            <td width="35%">
+            		<div id="state3">
+					<div id="state2">
+            <select name="state" id="state" style="width:35%" th:onchange ="'javascript:upcity();'">
+            <option value="0">--Select State--</option>
+            <th:block  th:each="stateList : ${stateList}">
+            <th:if test= "${stateList.status=='Y' }"> 
+            <option th:value="${stateList.id}" th:selected="${state==stateList.id}" th:text="${stateList.stateName}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error9">Select Country</span></td>
+        </tr>
+   
+    <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Enter Client City</td>
+            <td width="35%">
+            	<div id="state1">
+				<div id="state4">
+            <select name="city" id="city" style="width:35%">
+            <option value="0">--Select City--</option>
+            <th:block  th:each="cityList : ${cityList}">
+            <th:if test= "${cityList.status=='Y' }"> 
+            <option th:value="${cityList.id}" th:selected="${city==cityList.id}" th:text="${cityList.cityName}"></option>           
+            </th:if>
+            </th:block>
+            </select> 
+            </div>
+            </div>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error10">Select Country</span></td>
+        </tr>
+
+ <tr id="frm_tbleodd">
+            <td width="22%" class="frmtbl_td">Client Address</td>
+            <td width="30%">
+           			<textarea style="width: 35%;" name="address" id="address" th:text="${object.address}"></textarea>
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none " id="Error11">Enter Address</span></td>
+   </tr>
+   
+     <tr id="frm_tbleven">
+            <td width="22%" class="frmtbl_td">Status</td>
+            <td width="35%">
+            <select id="status" name="status"  style="width:35%">
+            <option value="0" >--Select Status--</option>
+            <option value="Y" th:selected="${object.status.equals('Y')}">Active</option>
+            <option value="N" th:selected="${object.status.equals('N')}">Inactive</option>
+            </select> 
+          </td>
+          <td width="48%"><span style="color:#ff0000; display: none" id="Error12">Select Status</span></td>
+        </tr>
+
+        
+                     <tr>
+                    <td colspan="3" >
+                   
+		                  <button  class="frmbutton" style="margin-left:22%;" >Update</button>
+                <input type="reset" class="frmbutton" style="margin-left:2.5%;" onclick="canceladdproject();" th:value="Reset"></input>
+               	       
+					</td>
+					</tr>
+</table>
+
+</form>
+ 
+ 
+</div>
+</body>
+</html>
+ 
